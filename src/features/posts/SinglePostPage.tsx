@@ -28,6 +28,7 @@ export const SinglePostPage = () => {
     <section>
       <article className="post">
         <h2>{post.title}</h2>
+        <PostAuthor userId={post.user} />
         <p className="post-content">{post.content}</p>
 
         {canEdit && (
@@ -35,8 +36,6 @@ export const SinglePostPage = () => {
             Edit Post
           </Link>
         )}
-
-        <PostAuthor userId={post.user} />
       </article>
     </section>
   )

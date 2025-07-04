@@ -6,6 +6,7 @@ import App from './App'
 import { store } from './app/store'
 
 import { worker } from './api/server'
+import { fetchUsers } from '@/features/users/usersSlice'
 
 import './primitiveui.css'
 import './index.css'
@@ -17,6 +18,7 @@ async function start() {
 
   const root = createRoot(document.getElementById('root')!)
 
+  store.dispatch(fetchUsers())
   root.render(
     <React.StrictMode>
       <Provider store={store}>
