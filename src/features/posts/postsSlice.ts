@@ -4,7 +4,7 @@ import { sub } from 'date-fns'
 import { client } from '@/api/client'
 
 import { createAppAsyncThunk } from '@/app/withTypes'
-import { userLoggedOut } from '@/features/auth/authSlice'
+import { logout } from '@/features/auth/authSlice'
 
 // Define a TS type for the data we'll be using
 export interface Post {
@@ -138,7 +138,7 @@ const postsSlice = createSlice({
         state.status = 'failed'
         state.error = action.error.message ?? 'Unknown Error'
       })
-      .addCase(userLoggedOut, (state) => {
+      .addCase(logout.fulfilled, (state) => {
         // Clear out the list of posts whenever the user logs out
         return initialState
       })
@@ -172,6 +172,11 @@ export const { postUpdated, reactionAdded } = postsSlice.actions
 export const selectAllPosts = (state: RootState) => state.posts.posts
 
 export const selectPostById = (state: RootState, postId: string) => state.posts.posts.find((post) => post.id === postId)
+
+export const selectPostsByUser = (state: RootState, userId) => {
+  const allPosts = selectAllPosts(state)
+  return allPosts.filter((post) => post.user === userId)
+}
 
 export const selectPostsStatus = (state: RootState) => state.posts.status
 export const selectPostsError = (state: RootState) => state.posts.error
